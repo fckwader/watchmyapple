@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        *{
+            font-family: Arial, sans-serif;
+        }
+        #container{
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+        }
+    </style>
+    <div id="container">
+        <h1>
+            WatchMyApple
+        </h1>
+        <div id="imgcont">
+            <img src="1.jpg">
+        </div>
+        <h2 id="announce"></h2>
+        <h2 id="time"></h2>
+    </div>
+    <script>
+        const startdate = new Date();
+        const max = 40;
+
+        const genTime = (t) => {
+            let seconds = Math.floor(t / 1000);
+            let minutes = Math.floor(seconds / 60);
+            seconds = seconds - minutes * 60;
+            let hours = Math.floor(minutes / 60);
+            minutes = minutes - hours * 60;
+
+            if(hours.toString().length <= 1){
+                hours = "0" + hours;
+            }
+            if(minutes.toString().length <= 1){
+                minutes = "0" + minutes;
+            }
+            if(seconds.toString().length <= 1){
+                seconds = "0" + seconds;
+            }
+
+
+            return hours + ":" + minutes + ":" + seconds;
+        }
+
+        let rot = 0;
+
+        let timer = null;
+
+        document.onvisibilitychange = () => {
+            if(!document.hidden && rot < max){
+                rot = 0;
+                clearInterval(timer);
+            }
+            else{
+                timer = setInterval(() =>{
+                    rot++;
+                }, 1000);
+            }
+        }
+
+        setInterval(() => {
+            if(rot < max){
+                document.querySelector("#time").innerHTML = genTime(new Date() - startdate);
+            }
+            if(rot >= max){
+                document.querySelector("img").src = "2.jpg";
+                document.querySelector("#announce").innerHTML = "YOU LOST!<br/>The apple rotted. Should've watched it better!";
+            }
+        }, 100/6);
+
+    </script>
+</body>
+</html>
