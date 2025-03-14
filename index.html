@@ -31,7 +31,7 @@
     </div>
     <script>
         const startdate = new Date();
-        const max = 40;
+        const max = Math.random() * 60 + 40;
 
         const genTime = (t) => {
             let seconds = Math.floor(t / 1000);
